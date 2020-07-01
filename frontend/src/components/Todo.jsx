@@ -1,10 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import axios from 'axios'
 import './Todo.css'
 
 const Todo = props => {
   const [todoName, setTodoName] = useState('');
   const [todoList, setTodoList] = useState([])
+
+  useEffect(()=>{
+    axios.get('http://localhost:3100/api/todo')
+    .then((result)=>{
+      const todoData =  result.data
+      const todos = []
+
+      for(const key in todoData){
+        todos.push({
+          id:key,
+          title : todoData[key].title
+        })
+      }
+      setTodoList(todos)
+    })
+  }, [])
 
   const inputChangeHandler = (event) => {
     setTodoName(event.target.value)
@@ -43,7 +59,7 @@ const Todo = props => {
       <ul>
         {
           todoList.map(todo => {
-            return <li key={todo}>{todo}</li>
+            return <li key={todo.id}>{todo.title}</li>
           })
         }
       </ul>
