@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import axios from 'axios'
 import './Todo.css'
 
 const Todo = props => {
@@ -13,6 +13,17 @@ const Todo = props => {
   const todoAddHandler = (event) => {
     event.preventDefault()
     setTodoList(todoList.concat(todoName))
+    console.log(todoName);
+    axios.post('http://localhost:3100/api/todo',{
+      title: todoName
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
     setTodoName('')
   }
 
@@ -24,15 +35,15 @@ const Todo = props => {
           placeholder="Todo..."
           onChange={inputChangeHandler}
 
-          
+
           value={todoName}
         />
         <button className="btn">Add</button>
       </form>
       <ul>
         {
-          todoList.map(todo=>{
-          return <li key={todo}>{todo}</li>
+          todoList.map(todo => {
+            return <li key={todo}>{todo}</li>
           })
         }
       </ul>
