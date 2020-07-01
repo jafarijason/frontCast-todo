@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import './Todo.css'
 
@@ -6,20 +6,20 @@ const Todo = props => {
   const [todoName, setTodoName] = useState('');
   const [todoList, setTodoList] = useState([])
 
-  useEffect(()=>{
+  useEffect(() => {
     axios.get('http://localhost:3100/api/todo')
-    .then((result)=>{
-      const todoData =  result.data
-      const todos = []
+      .then((result) => {
+        const todoData = result.data
+        const todos = []
 
-      for(const key in todoData){
-        todos.push({
-          id:key,
-          title : todoData[key].title
-        })
-      }
-      setTodoList(todos)
-    })
+        for (const key in todoData) {
+          todos.push({
+            id: key,
+            title: todoData[key].title
+          })
+        }
+        setTodoList(todos)
+      })
   }, [])
 
   const inputChangeHandler = (event) => {
@@ -28,9 +28,9 @@ const Todo = props => {
 
   const todoAddHandler = (event) => {
     event.preventDefault()
-    setTodoList(todoList.concat(todoName))
+     
     console.log(todoName);
-    axios.post('http://localhost:3100/api/todo',{
+    axios.post('http://localhost:3100/api/todo', {
       title: todoName
     })
       .then((res) => {
@@ -39,7 +39,9 @@ const Todo = props => {
       .catch(err => {
         console.log(err);
       })
-
+    setTodoList(todoList.concat({
+      id: Math.floor(Math.random()* 10000),
+      title:todoName} ))
     setTodoName('')
   }
 
