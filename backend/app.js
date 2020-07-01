@@ -1,5 +1,7 @@
 const express = require("express");
 
+const mongoose = require("mongoose");
+
 const bodyParser = require("body-parser");
 
 const todoRoutes = require("./routes/todo-routes");
@@ -10,4 +12,13 @@ app.use(bodyParser.json());
 
 app.use("/api/todo", todoRoutes);
 
-app.listen(3100);
+mongoose
+    .connect(
+        "mongodb+srv://frontcast-todo:XPUeiwOPdwlv9X9R@jasondevconnector-xi2qh.mongodb.net/frontcast-todo?retryWrites=true&w=majority"
+    )
+    .then(() => {
+        app.listen(3100);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
