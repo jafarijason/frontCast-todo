@@ -1,10 +1,13 @@
 const express = require("express");
 
-const todoRoutes = require('./routes/todo-routes')
+const bodyParser = require("body-parser");
+
+const todoRoutes = require("./routes/todo-routes");
 
 const app = express();
 
-app.use('/api/todo', todoRoutes)
+app.use(bodyParser.json());
 
+app.use("/api/todo", todoRoutes);
 
-app.listen(3100)
+app.listen(3100);
