@@ -1,5 +1,7 @@
 const express = require("express");
 
+const mongoStringConnect = require('./mongostringConnect')
+
 const mongoose = require("mongoose");
 
 const bodyParser = require("body-parser");
@@ -20,9 +22,7 @@ app.use((req, res, next) => {
 app.use("/api/todo", todoRoutes);
 
 mongoose
-    .connect(
-        "mongodb+srv://frontcast-todo:XPUeiwOPdwlv9X9R@jasondevconnector-xi2qh.mongodb.net/frontcast-todo?retryWrites=true&w=majority"
-    )
+    .connect(mongoStringConnect)
     .then(() => {
         app.listen(3100);
     })
